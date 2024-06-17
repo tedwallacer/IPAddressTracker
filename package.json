@@ -1,0 +1,13 @@
+{
+  "name": "ip-address-tracker",
+  "version": "1.0.0",
+  "description": "A web application for tracking IP addresses",
+  "main": "main.js",
+  "scripts": {
+    "start": "live-server public"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}
