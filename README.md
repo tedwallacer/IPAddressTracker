@@ -1,1 +1,1 @@
-# IPAddressTracker
+IPAddressTracker is a JavaScript-based project designed to capture user IP address input, fetch detailed information about the IP (such as location, ISP, and connection type) from a remote API, and then dynamically update the user interface with these details. Its core functionality revolves around enhancing user experience by providing real-time IP tracking and analysis.
