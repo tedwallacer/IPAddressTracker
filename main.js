@@ -10,29 +10,31 @@ const ispDisplay = document.querySelector('.isp');
 
 const fetchIPDetails = async (ipAddress) => {
   const apiKey = process.env.IP_STACK_ACCESS_KEY;
-  const apiUrl = `http://api.ipstack.com/${ipAddress}?access_key=${apiKey}`;
+  const apiUrl = `https://api.ipstack.com/${ipAddress}?access_key=${apiKey}`;
 
   try {
     const response = await fetch(apiUrl);
-    if (!response.ok) throw new Error('Failed to fetch IP details');
+    if (!response.ok) throw new Error(`Failed to fetch IP details: ${response.statusText}`);
 
     const data = await response.json();
+    if (data.error) throw new Error(`API Error: ${data.error.info}`);
     return data;
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error:', error.message);
+    alert(`Error: ${error.message}`);
     return null;
   }
 };
 
 const updateUI = (data) => {
   if (!data) {
-    alert('Failed to fetch IP details. Please try again later.');
+    console.error('Failed to fetch or parse IP details.');
     return;
   }
 
   ipAddressDisplay.textContent = data.ip || 'N/A';
   locationDisplay.textContent = `${data.city}, ${data.region_name}, ${data.country_name}` || 'N/A';
-  timezoneDisplay.textContent = `UTC ${data.location.timezone}` || 'N/A';
+  timezoneDisplay.textContent = `UTC ${data.location ? data.location.timezone : 'N/A'}`;
   ispDisplay.textContent = data.isp || 'N/A';
 };
 
