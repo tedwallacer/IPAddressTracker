@@ -1,54 +1,54 @@
 const axios = require('axios');
 require('dotenv').config();
 
-const API_BASE_URL = 'https://api.ipify.org?format=json';
-const GEOLOCATION_BASE_URL = 'https://geo.ipify.org/api/v1';
-const API_KEY = process.env.API_KEY;
+const CURRENT_IP_API_URL = 'https://api.ipify.org?format=json';
+const IP_GEOLOCATION_API_URL = 'https://geo.ipify.org/api/v1';
+const GEO_IP_API_KEY = process.env.API_KEY;
 
-function logMessage(message, type = 'info') {
-    const messageType = type.toUpperCase();
-    console.log(`[${new Date().toISOString()}] - ${messageType} - ${message}`);
+function logEvent(message, level = 'info') {
+    const logLevel = level.toUpperCase();
+    console.log(`[${new Date().toISOString()}] - ${logLevel} - ${message}`);
 }
 
-async function fetchCurrentIP() {
+async function fetchPublicIPAddress() {
     try {
-        const response = await axios.get(API_BASE_URL);
+        const response = await axios.get(CURRENT_IP_API_URL);
         return response.data.ip;
     } catch (error) {
-        logMessage('Error fetching IP Address: ' + error, 'error');
+        logEvent('Error fetching public IP address: ' + error, 'error');
         return null;
     }
 }
 
-async function fetchIPDetails(ipAddress) {
+async function fetchGeolocationDetails(ipAddress) {
     try {
-        const url = `${GEOLOCATION_BASE_URL}?apiKey=${API_KEY}&ipAddress=${ipAddress}`;
-        const response = await axios.get(url);
+        const requestUrl = `${IP_GEOLOCATION_API_URL}?apiKey=${GEO_IP_API_KEY}&ipAddress=${ipAddress}`;
+        const response = await axios.get(requestUrl);
         return response.data;
     } catch (error) {
-        logMessage('Error fetching IP Details: ' + error, 'error');
+        logEvent('Error fetching geolocation details: ' + error, 'error');
         return null;
     }
 }
 
-async function getCurrentIPDetails() {
-    const currentIP = await fetchCurrentIP();
-    if (!currentIP) {
-        logMessage('Failed to fetch current IP Address.', 'error');
+async function displayCurrentIPGeolocation() {
+    const publicIP = await fetchPublicIPAddress();
+    if (!publicIP) {
+        logEvent('Failed to fetch public IP address.', 'error');
         return;
     }
 
-    const ipDetails = await fetchIPDetails(currentIP);
-    if (!ipDetails) {
-        logMessage('Failed to fetch details for IP Address: ' + currentIP, 'error');
+    const geolocationDetails = await fetchGeolocationDetails(publicIP);
+    if (!geolocationDetails) {
+        logEvent('Failed to fetch geolocation details for IP: ' + publicIP, 'error');
         return;
     }
 
-    logMessage('IP Details: ' + JSON.stringify(ipDetails), 'info');
+    logEvent('Geolocation Details: ' + JSON.stringify(geolocationDetails), 'info');
 }
 
 module.exports = {
-    fetchCurrentIP,
-    fetchIPDetails,
-    getCurrentIPDetails
+    fetchPublicIPAddress,
+    fetchGeolocationDetails,
+    displayCurrentIPGeolocation
 };
