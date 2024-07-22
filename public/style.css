@@ -1,0 +1,88 @@
+body, h1, h2, h3, p, form {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.input-field {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+    flex-grow: 1;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+.ip-details {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.detail-item {
+    margin-bottom: 20px;
+}
+
+.detail-item:last-child {
+    margin-bottom: 0;
+}
+
+.detail-title {
+    color: #6c757d;
+    font-size: 1.2em;
+}
+
+.detail-value {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .input-field {
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+
+    .submit-button {
+        width: 100%;
+    }
+
+    .ip-details {
+        text-align: center;
+    }
+}
